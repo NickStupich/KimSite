@@ -1,0 +1,30 @@
+<div id="navigationDiv" class="navigation">
+            <table class="navigation">
+                <!--
+                <tr>                
+                    <td class="navImage">
+                        <img id="i1" style="height: 50px; width: 50px" src="img1Small.jpg" alt="" onmouseover="MakeBigger(0)"
+                            onmouseout="MakeSmaller()" onclick="MoveToPage(0)" />
+                    </td>
+                    <td class="navImage">
+                        <img id="i2" style="height: 50px; width: 50px"; src="img2Small.jpg" alt="" onmouseover="MakeBigger(1)"
+                            onmouseout="MakeSmaller()" onclick="MoveToPage(1)" />
+                    </td>
+                    <td class="navImage">
+                        <img id="i3" style="height: 50px; width: 50px" src="img3Small.jpg" alt="" onmouseover="MakeBigger(2)"
+                            onmouseout="MakeSmaller()" onclick="MoveToPage(2)" />
+                    </td>
+                </tr>
+                -->
+                
+                <tr>
+                    {% for horizontalPage in HPageEntities %}
+                        <td class="navImage">
+                            <img id="{{horizontalPage.navImageId}}" style="height: 50px; width: 50px"; src="{{horizontalPage.navImageSrc}}" alt="" onmouseover="MakeBigger({{horizontalPage.pageNumber}})"
+                                    onmouseout="MakeSmaller()" onclick="MoveToPage({{horizontalPage.pageNumber}})" />
+                        </td>                    
+                    {% endfor %}
+                </tr>
+                
+            </table>
+        </div>

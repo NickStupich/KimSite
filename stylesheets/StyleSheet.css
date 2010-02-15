@@ -1,0 +1,215 @@
+﻿body
+{
+	overflow:hidden;
+}
+
+div.HScrollMain
+{
+	font-size:large;
+	position:absolute;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	background-color:Gray;
+	min-height:600px;
+}
+
+div.HScrollPage
+{
+	position:absolute;
+	top:40px;
+	bottom:120px;
+	
+	left:10000px;
+	padding-top:10px;
+	padding-bottom:10px;
+	overflow:auto;
+}
+
+div.GreenPage
+{
+	background-color:Lime;
+}
+
+div.RedPage
+{
+	background-color:Fuchsia;
+}
+
+div.BluePage
+{
+	background-color:Aqua;
+}
+
+div.BioPage
+{
+	background-color:#BB88BB;
+}
+
+div.ProfilePage
+{
+	background-color:#AAAAAA;
+}
+
+td.navImage
+{
+	vertical-align:bottom;
+	
+	padding-left:3px;
+	padding-right:3px;
+}
+
+div.navImage
+{
+	float:left;
+	
+	margin-left:auto;
+	margin-right:auto;
+}
+
+div.navDiv
+{
+	height: 50px;
+	 width: 50px;
+}
+
+img.navImage
+{
+	height: 50px;
+	width: 50px
+}
+
+div.navigation
+{
+	background-color:Transparent;
+	height:104px;
+	padding:2px;
+	position:fixed;
+	bottom:10px;
+	width:100%;
+	z-index:10;
+}
+
+table.navigation
+{
+	margin-left:auto;
+	margin-right:auto;
+	height:100%;
+	z-index:10;
+}
+
+div.HScrollContent
+{
+	margin-left:auto;
+	margin-right:auto;
+	width:1000px;
+	height:100%;
+	overflow:auto;
+}
+
+div.BlueContent
+{
+	background-color:#ADADEF;
+}
+
+div.RedContent
+{
+	background-color:#EFADAD;
+}
+
+div.GreenContent
+{
+	background-color:#ADEFB6;
+}
+
+div.ProfilePageContent
+{
+	color:White;
+	background-color:#111111;
+}
+
+div.BioContent
+{
+	overflow:auto;
+	background-color:#DDAADD;
+}
+
+img.SkiImage
+{
+  
+	width:365px;
+	height:273px;
+ 
+}
+
+div.Loading
+{
+	position:fixed; 
+	background-color:White; 
+	top:0px; 
+	bottom:0px; 
+	left:0px; 
+	right:0px; 
+	z-index:200;
+	font-size:x-large;
+	font-style:oblique;
+	text-align:center;
+	margin-top:auto;
+	margin-bottom:auto;
+	opacity:1.0;
+	filter:alpha(opacity=0.4);
+	
+}
+div.BlackBackground
+{
+	background-color:Black;
+	opacity:0.0;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+	color:#FFFFFF;
+	font-size:medium;
+	z-index:11;
+}
+
+div.EnlargedImage
+{
+	position:absolute;
+	margin-left:auto;
+	margin-right:auto;
+	top:20;
+	opacity:0.0;
+	width:100%;
+	text-align:center;
+	z-index:12;
+}
+
+img.EnlargedImage
+{
+}
+
+div.EnlargedImageText
+{
+	position:absolute;
+	vertical-align:center;
+	width:100%;
+	text-align:center;
+	bottom:10;
+}
+
+div.PortfolioNavigationImage
+{
+	height:180px;
+	width:100%;
+	text-align:center;
+	border-style:dotted;
+	border-width:medium;
+}
+
+img.PortfolioNavigationImage
+{
+	
+}

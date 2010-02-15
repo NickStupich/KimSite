@@ -1,0 +1,22 @@
+application: kimsite
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+
+- url: /(.*\.(gif|png|jpg))
+  static_files: static/\1
+  upload: static/(.*\.(gif|png|jpg))
+  
+- url: /stylesheets
+  static_dir : stylesheets
+  
+- url: /testImage
+  script: test.py
+  
+- url: /testPortfolio
+  script: test.py
+    
+- url: .*
+  script: main.py
