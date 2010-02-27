@@ -1,6 +1,7 @@
 ﻿body
 {
 	overflow:hidden;
+	background-image: url('../backImage.jpg');
 }
 
 div.HScrollMain
@@ -11,7 +12,7 @@ div.HScrollMain
 	right:0px;
 	top:0px;
 	bottom:0px;
-	background-color:Gray;
+	//background-color:Gray;
 	min-height:600px;
 }
 

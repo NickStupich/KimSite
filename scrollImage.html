@@ -1,0 +1,214 @@
+<html>
+    <head>
+        
+        <script type="text/javascript">
+            left = 0;
+            topPos = 0;
+            imageWidth = -1;
+            screenPortionToMove = 0.4;
+            velocitySlowing = 1;
+            velocitySlowingFactor = 0.8;
+            velocityScalingFactor = 1;
+            velocityAccelerationFactor = 10;
+            updateTimeout = 20;
+            maxVelocity = 20;
+            xVel = 0;
+            yVel = 0;
+            
+            mouseX = -1;
+            mouseY = -1;
+            movingReference = -1;
+            imagesDiv = -1;
+            
+            allowZoom = true;
+            maxZoom = 300;
+            zoom = -1;
+            
+            function BodyLoad()
+            {
+                image1 = document.getElementById('Image1')
+                image2 = document.getElementById('Image2')
+                
+                imageWidth = image2.width;
+                image1.style.left = left + "px";
+                image2.style.left = left - imageWidth + "px";
+                
+                imagesDiv = document.getElementById('ScrollingImage');
+                imagesDiv.onmouseover = StartMovingWithMouse;
+                imagesDiv.onmouseout = StopPosMovingWithMouse;
+                zoom = parseInt(image1.style.height);
+            }
+            
+            function MouseMove(event)
+            {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+            }
+            
+            function mouseWheelMove(event)
+            {
+                delta = event.wheelDelta/30;
+                
+                if(zoom + delta > 100 && zoom + delta < maxZoom)
+                {
+                    zoom += delta;
+                    image1.style.height = zoom + "%";
+                    image2.style.height = zoom + "%";
+                    
+                    //to keep x-rotation constant
+                    imageWidth = image2.width;
+                    
+                    //to keep y-rotation constant
+                    topPos *= (1 - (zoom - delta)/(zoom *2));
+                    
+                    UpdateImagePosition();
+                }
+            }
+            
+            function AdjustVelocity()
+            {
+                //modify the xVel according to inputs
+                screenWidth = GetDivWidth();
+                if(mouseX/screenWidth < screenPortionToMove)
+                {
+                    xVel -= (screenWidth * screenPortionToMove - mouseX)*velocityAccelerationFactor/screenWidth;
+                }
+                else if(mouseX/ screenWidth > (1 - screenPortionToMove))
+                {
+                    xVel -= (screenWidth * (1 - screenPortionToMove) - mouseX)*velocityAccelerationFactor / screenWidth;
+                }
+                
+                //slow it down
+                if(xVel > maxVelocity)
+                {
+                    xVel = maxVelocity;
+                }
+                else if(xVel < -maxVelocity)
+                {
+                    xVel = -maxVelocity;
+                }
+                else if(xVel > velocitySlowing || xVel < -velocitySlowing)
+                {
+                    xVel *= velocitySlowingFactor;
+                }
+                else
+                {
+                    xVel = 0;    
+                }
+                
+                //modify the yVel according to mouse input
+                screenHeight = GetDivHeight();
+                if(mouseY/screenHeight < screenPortionToMove)
+                {
+                    yVel -= (screenHeight * screenPortionToMove - mouseY)*velocityAccelerationFactor/screenHeight;
+                }
+                else if(mouseY/ screenHeight > (1 - screenPortionToMove))
+                {
+                    yVel -= (screenHeight * (1 - screenPortionToMove) - mouseY)*velocityAccelerationFactor / screenHeight;
+                }
+                //slow it down
+                if(yVel > maxVelocity)
+                {
+                    yVel = maxVelocity;
+                }
+                else if(yVel < -maxVelocity)
+                {
+                    yVel = -maxVelocity;
+                }
+                else if(yVel > velocitySlowing || yVel < -velocitySlowing)
+                {
+                    yVel *= velocitySlowingFactor*velocitySlowingFactor;
+                }
+                else
+                {
+                    yVel = 0;    
+                }
+            }
+            
+            function MoveImages()
+            {
+                AdjustVelocity();
+                
+                left -= xVel * velocityScalingFactor;
+                
+                topPos -= yVel * velocityScalingFactor;
+                if(topPos < GetDivHeight() - image1.height )
+                    topPos = GetDivHeight() - image1.height;
+                if(topPos > 0)
+                    topPos = 0;
+                
+                UpdateImagePosition();
+                
+                movingReference = setTimeout(MoveImages, updateTimeout);
+            }
+            
+            function UpdateImagePosition()
+            {
+                image1.style.left = left + "px";
+                image2.style.left = left - imageWidth + 'px';
+                
+                //deal with rotating around
+                screenWidth = GetDivWidth()
+                if(left > screenWidth + (imageWidth - screenWidth)/2)
+                {
+                    var tempImage = image1;
+                    image1 = image2;
+                    image2 = tempImage;
+                    left -= imageWidth;
+                }
+                else if(left < -(imageWidth - screenWidth)/2)
+                {
+                    var tempImage = image1;
+                    image1 = image2;
+                    image2 = tempImage;
+                    left += imageWidth;
+                }
+                
+                
+                image1.style.top = topPos + "px";
+                image2.style.top = topPos + "px";
+            }
+            
+            function GetDivWidth()
+            {
+                return imagesDiv.offsetWidth;
+            }
+            
+            function GetDivHeight()
+            {
+                return imagesDiv.offsetHeight;
+            }
+            
+            function StartMovingWithMouse()
+            {
+                imagesDiv.onmousemove = MouseMove;
+                if(movingReference == -1)
+                {
+                    MoveImages();
+                }
+                
+                if(allowZoom)
+                {
+                    window.onmousewheel = document.onmousewheel = mouseWheelMove
+                }
+            }
+            
+            function StopPosMovingWithMouse()
+            {
+                imagesDiv.onmousemove = null;
+                mouseX = GetDivWidth() / 2;
+                mouseY = GetDivHeight() / 2;
+                window.onmousewheel = document.onmousewheel = null;
+            }
+        </script>
+    </head>
+    
+    <body style="background-color:#AAAAAA;" onload="BodyLoad()">
+        <div id="ScrollingImage" style="overflow:hidden; height:700px; width: 100%; position:absolute;">
+            <img alt="" id="Image1" src="{{imageName}}" style="height:{{startHeight}}%; overflow:hidden; position:absolute; topPos:-300px; left:0px">
+       
+            <img alt="" id="Image2" src="{{imageName}}" style="height:{{startHeight}}%; overflow:hidden; position:absolute; topPos:-300px; left:-24938px">
+        </div>
+    </body>
+    
+</html>
